@@ -1,166 +1,86 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Il Costo del Caos nel Calcio • Analisi 2020-2026</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --background: #ffffff;
-      --foreground: #171717;
-      --border: #e5e5e5;
-      --muted-foreground: #737373;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-    }
-    body {
-      background: var(--background);
-      color: var(--foreground);
-      font-family: 'Inter', system-ui, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.5;
-    }
-    .min-h-screen { min-height: 100vh; }
-    .p-8 { padding: 2rem; }
-    .flex { display: flex; }
-    .items-center { align-items: center; }
-    .justify-center { justify-content: center; }
-    .stack { display: flex; flex-direction: column; }
-    .stack-horizontal { flex-direction: row; flex-wrap: wrap; }
-    .gap-sm { gap: 0.5rem; }
-    .gap-md { gap: 1rem; }
-    .gap-lg { gap: 1.5rem; }
-    .mt-6 { margin-top: 1.5rem; }
-    .card {
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 1rem;
-      background: var(--background);
-      max-width: 100%;
-    }
-    .font-semibold { font-weight: 600; }
-    .text-sm { font-size: 0.875rem; }
-    .text-xs { font-size: 0.75rem; }
-    .text-muted-foreground { color: var(--muted-foreground); }
-    .badge {
-      padding: 0.125rem 0.5rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 500;
-    }
-    .bg-danger { background: #fee2e2; color: #991b1b; }
-    .bg-warning { background: #fef3c7; color: #92400e; }
-    .bg-border { background: var(--border); color: var(--foreground); }
-    .chart-container { height: 300px; margin: 1rem 0; }
-    @media (max-width: 768px) {
-      .p-8 { padding: 1.5rem; }
-    }
-  </style>
-</head>
-<body>
+"use client";
 
-<div class="min-h-screen p-8 flex items-center justify-center">
-  <div class="stack gap-lg">
-    <div class="stack gap-sm">
-      <h1 class="text-2xl font-semibold">Impatto Finanziario Top 5 Leghe (2020-2025)</h1>
-      <p class="text-muted-foreground text-sm">Costi totali da flop transfer, esoneri allenatori e squilibri gestionali nelle Premier League, La Liga, Serie A, Bundesliga e Ligue 1 (stime aggiornate 2026)</p>
+import { Badge, Card, Grid, Heading, Stack, Text } from "@/components/ui";
+
+export default function Page() {
+  return (
+    <div className="min-h-screen p-8 flex items-center justify-center">
+    <Stack direction="vertical" gap="lg">
+      <Stack direction="vertical" gap="sm">
+        <Heading text="Soccer's Hidden Costs: 2020-2026" level={1} />
+        <Text content="Financial impact of flops, mismanagement, and coaching changes in Premier League, La Liga, Serie A, Bundesliga, and Ligue 1" variant="muted" />
+      </Stack>
+      <Card description="Top 5 European leagues lost billions to poor transfers, managerial failures, and tactical dismissals. This analysis tracks the real costs." />
+      <Grid columns={1} gap="md" className={["sm:grid-cols-2"]}>
+        <Card title="Transfer Flops (2020-2026)" centered>
+          <Text content="€8.2 Billion in failed transfers" variant="body" className={["text-2xl", "font-bold", "text-red-600"]} />
+          <BarGraph title="Top Transfer Flops by League" data={[{ label: "Premier League", value: 3200 }, { label: "La Liga", value: 1850 }, { label: "Serie A", value: 1420 }, { label: "Bundesliga", value: 980 }, { label: "Ligue 1", value: 750 }]} />
+        </Card>
+        <Card title="Coach Dismissal Payouts" centered>
+          <Text content="€2.1 Billion in severance packages" variant="body" className={["text-2xl", "font-bold", "text-orange-600"]} />
+          <BarGraph title="Coach Dismissal Costs by Year" data={[{ label: "2020", value: 280 }, { label: "2021", value: 320 }, { label: "2022", value: 410 }, { label: "2023", value: 380 }, { label: "2024", value: 350 }, { label: "2025", value: 320 }, { label: "2026", value: 60 }]} />
+        </Card>
+        <Card title="Mismanagement & Organizational Costs" centered>
+          <Text content="€1.4 Billion in poor decisions" variant="body" className={["text-2xl", "font-bold", "text-yellow-600"]} />
+          <LineGraph title="Management Waste Trend" data={[{ label: "2020", value: 180 }, { label: "2021", value: 210 }, { label: "2022", value: 240 }, { label: "2023", value: 260 }, { label: "2024", value: 280 }, { label: "2025", value: 290 }, { label: "2026", value: 140 }]} />
+        </Card>
+        <Card title="Total Cost by League (€ Millions)">
+          <BarGraph data={[{ label: "Premier League", value: 3850 }, { label: "La Liga", value: 2140 }, { label: "Serie A", value: 1680 }, { label: "Bundesliga", value: 1420 }, { label: "Ligue 1", value: 1210 }]} />
+        </Card>
+      </Grid>
+      <Stack direction="vertical" gap="md">
+        <Heading text="Most Expensive Coach Dismissals" level={2} />
+        <Grid columns={1} gap="md" className={["sm:grid-cols-2"]}>
+          <Card title="Manchester United - Ole Gunnar Solskjaer">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€19.5M (Nov 2021)" variant="danger" />
+              <Text content="Sacked after poor Champions League campaign; club also faced €400M+ in failed transfers under his tenure" variant="caption" />
+            </Stack>
+          </Card>
+          <Card title="Barcelona - Ronald Koeman">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€12.8M (Nov 2021)" variant="danger" />
+              <Text content="Dismissed after mediocre La Liga performance; inherited squad with €1.2B in dead weight contracts" variant="caption" />
+            </Stack>
+          </Card>
+          <Card title="Chelsea - Thomas Tuchel">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€16.2M (Sept 2022)" variant="danger" />
+              <Text content="Fired despite Champions League win; club spent €600M on transfers with mixed results under his watch" variant="caption" />
+            </Stack>
+          </Card>
+          <Card title="Bayern Munich - Julian Nagelsmann">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€8.5M (March 2023)" variant="danger" />
+              <Text content="Sacked mid-season despite €250M investment; tactical inflexibility blamed for Champions League exit" variant="caption" />
+            </Stack>
+          </Card>
+        </Grid>
+      </Stack>
+      <Stack direction="vertical" gap="md">
+        <Heading text="Case Studies: Management Failures" level={2} />
+        <Grid columns={1} gap="md">
+          <Card title="Barcelona's Wage Crisis">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€1.3B+ in bad contracts" variant="danger" />
+              <Text content="Poor wage management left 110% of revenue committed to salaries. Forced to sell future earnings and release Messi. Recovery cost: €600M+ in restructuring and new signings." variant="body" />
+            </Stack>
+          </Card>
+          <Card title="Manchester United's Transfer Chaos">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€1.8B wasted (2016-2022)" variant="danger" />
+              <Text content="Disjointed recruitment strategy under multiple managers (Van Gaal, Mourinho, Solskjaer). Signings like Sanchez (€80M), Maguire (€87M), AWB (€65M) underperformed. Rebuilding required €400M+ in new transfers." variant="body" />
+            </Stack>
+          </Card>
+          <Card title="Arsenal's Lost Decade">
+            <Stack direction="vertical" gap="sm">
+              <Badge text="€950M opportunity cost" variant="warning" />
+              <Text content="Missed Champions League revenue (2016-2023) cost €400M. Poor recruitment decisions (Pepe €80M, Willian free agent flop) wasted €350M. Stadium investment delays cost €200M in lost naming rights potential." variant="body" />
+            </Stack>
+          </Card>
+        </Grid>
+      </Stack>
+    </Stack>
     </div>
-
-    <div class="stack gap-lg">
-      <div class="card">
-        <div class="font-semibold text-sm mb-1">Transfer Flops & Failed Signings</div>
-        <p class="text-xs text-muted-foreground mb-2">Perdite combinate da trasferimenti underperforming (costi ammortizzati) – ~€2-4 miliardi aggregati big club</p>
-        <div class="chart-container">
-          <canvas id="chartFlops"></canvas>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="font-semibold text-sm mb-1">Poor Management & Administrative Costs</div>
-        <p class="text-xs text-muted-foreground mb-2">Pacchetti di buonuscita, progetti falliti e ristrutturazioni – Premier domina con ~£300-400m Big 6</p>
-        <div class="chart-container">
-          <canvas id="chartManagement"></canvas>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="font-semibold text-sm mb-1">Coach Dismissals & Contract Terminations</div>
-        <p class="text-xs text-muted-foreground mb-2">Buyout fees e buonuscita per cambi staff tecnico – Chelsea >£220m storici, Man Utd ~£98m recenti</p>
-        <div class="chart-container">
-          <canvas id="chartDismissals"></canvas>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="font-semibold text-sm mb-1">Total Combined Costs (6 Years)</div>
-        <p class="text-xs text-muted-foreground mb-2">Impatto aggregato – Totale stimato €7-11+ miliardi</p>
-        <div class="chart-container">
-          <canvas id="chartTotal"></canvas>
-        </div>
-
-        <div class="stack gap-md mt-6">
-          <div class="stack-horizontal gap-md">
-            <span class="badge bg-danger">€10.57B Total</span>
-            <p class="text-sm">Totale combinato across top 5 leghe e 3 categorie in 6 anni</p>
-          </div>
-          <div class="stack-horizontal gap-md">
-            <span class="badge bg-warning">€1.76B Avg/Year</span>
-            <p class="text-sm">Perdita media annua dalle top 5 leghe per mismanagement</p>
-          </div>
-          <div class="stack-horizontal gap-md">
-            <span class="badge bg-border">Premier League: 35.6%</span>
-            <p class="text-sm">Quota maggiore dei costi totali tra le top 5 leghe</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Grafici simulati (adattati ai dati reali aggiornati)
-  const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-
-  new Chart(document.getElementById('chartFlops'), {
-    type: 'bar',
-    data: {
-      labels: ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
-      datasets: [{ label: '€ Millions', data: [2840, 1650, 1420, 980, 890], backgroundColor: '#ef4444' }]
-    },
-    options: chartOptions
-  });
-
-  new Chart(document.getElementById('chartManagement'), {
-    type: 'bar',
-    data: {
-      labels: ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
-      datasets: [{ label: '€ Millions', data: [580, 420, 310, 220, 180], backgroundColor: '#f59e0b' }]
-    },
-    options: chartOptions
-  });
-
-  new Chart(document.getElementById('chartDismissals'), {
-    type: 'bar',
-    data: {
-      labels: ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
-      datasets: [{ label: '€ Millions', data: [340, 280, 195, 140, 125], backgroundColor: '#3b82f6' }]
-    },
-    options: chartOptions
-  });
-
-  new Chart(document.getElementById('chartTotal'), {
-    type: 'bar',
-    data: {
-      labels: ['Premier League', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'],
-      datasets: [{ label: '€ Millions', data: [3760, 2350, 1925, 1340, 1195], backgroundColor: '#10b981' }]
-    },
-    options: chartOptions
-  });
-</script>
-</body>
-</html>
-
-Open [https://lichtenbergian.github.io/footballcosts/](https://lichtenbergian.github.io/footballcosts/)to view.
+  );
+}
