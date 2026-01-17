@@ -9,4 +9,4 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view.
+Open [https://lichtenbergian.github.io/footballcosts/](https://lichtenbergian.github.io/footballcosts/)to view.
